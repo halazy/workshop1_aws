@@ -43,9 +43,9 @@ To create a SageMaker Autopilot experiment, we'll be using the transformed datas
 ![SageMaker](/images/image29.png?featherlight=false)
 - Next, choose the training method. Here, you have 3 options - **Auto, Ensembling** or **HPO**. By default, **Auto** is chosen as the training method.
 - SageMaker Autopilot can automatically select the training method based on the dataset size, or you can select it manually. The choices are as follows:
-- - Ensembling – Autopilot uses the AutoGluon library to train several base models. To find the best combination for your dataset, ensemble mode runs 10 trials with different model and meta parameter settings. Then Autopilot combines these models using a stacking ensemble method to create an optimal predictive model. For a list of algorithms that Autopilot supports in ensembling mode, see the following Algorithm support section.
-- - Hyperparameter optimization (HPO) – Autopilot finds the best version of a model by tuning hyperparameters using Bayesian optimization or multi-fidelity optimization while running training jobs on your dataset. HPO mode selects the algorithms that are most relevant to your dataset and selects the best range of hyperparameters to tune your models. To tune your models, HPO mode runs up to 100 trials (default) to find the optimal hyperparameters settings within the selected range. If your dataset size is less than 100 MB, Autopilot uses Bayesian optimization. Autopilot chooses multi-fidelity optimization if your dataset is larger than 100 MB. In multi-fidelity optimization, metrics are continuously emitted from the training containers. A trial that is performing poorly against a selected objective metric is stopped early. A trial that is performing well is allocated more resources.
-- - Auto – Autopilot automatically chooses either ensembling mode or HPO mode based on your dataset size. If your dataset is larger than 100 MB, Autopilot chooses HPO. Otherwise, it chooses ensembling mode. 
+  - Ensembling – Autopilot uses the AutoGluon library to train several base models. To find the best combination for your dataset, ensemble mode runs 10 trials with different model and meta parameter settings. Then Autopilot combines these models using a stacking ensemble method to create an optimal predictive model. For a list of algorithms that Autopilot supports in ensembling mode, see the following Algorithm support section.
+  - Hyperparameter optimization (HPO) – Autopilot finds the best version of a model by tuning hyperparameters using Bayesian optimization or multi-fidelity optimization while running training jobs on your dataset. HPO mode selects the algorithms that are most relevant to your dataset and selects the best range of hyperparameters to tune your models. To tune your models, HPO mode runs up to 100 trials (default) to find the optimal hyperparameters settings within the selected range. If your dataset size is less than 100 MB, Autopilot uses Bayesian optimization. Autopilot chooses multi-fidelity optimization if your dataset is larger than 100 MB. In multi-fidelity optimization, metrics are continuously emitted from the training containers. A trial that is performing poorly against a selected objective metric is stopped early. A trial that is performing well is allocated more resources.
+  - Auto – Autopilot automatically chooses either ensembling mode or HPO mode based on your dataset size. If your dataset is larger than 100 MB, Autopilot chooses HPO. Otherwise, it chooses ensembling mode. 
 ![SageMaker](/images/image25.png?featherlight=false)
 
 - Press _Next: Deployment and advanced settings_ and complete the values as shown in the diagram below.
@@ -113,7 +113,50 @@ Explainability results are not shown for the secondary (non-winning) models.
 ![SageMaker](/images/image36.png?featherlight=false)
 
 - Suppose you deployed the model as a real-time endpoint, you should be able to see the deployed endpoints under the Deployments section in the left pane as shown in the figure below.
-![SageMaker](/image//image43.png?featherlight=false)
+![SageMaker](/image/image43.png?featherlight=false)
+
+- The code sample below shows how to use a realtime endpoint that was previously deployed and make inference with the Autopilot trained best model.
+```import boto3
+
+# Create a low-level client representing Amazon SageMaker Runtime
+sagemaker_runtime = boto3.client('sagemaker-runtime', region_name='us-east-1')
+
+
+# Specify the endpoint name you provided during the deploy step in the UI 
+endpoint_name = "loan-default-prediction-endpoint"
+
+
+# Expected features in the expected order of sequence
+# ['loan_amount', 'loan_term', 'interest_rate', 'grade', 'sub_grade', 'verification_status', 
+# 'issued_on', 'purpose', 'dti', 'inquiries_last_6_months', 'open_credit_lines', 
+# 'derogatory_public_records', 'revolving_line_utilization_rate', 'total_credit_lines', 
+# 'employment_length', 'home_ownership', 'annual_income', 'employer_title_features']
+
+
+# Test case for when a user will default 
+payload = '0.05797101449275362,1.0,0.562214618955953,"(8,[1],[1.0])","(36,[14],[1.0])","(4,[2],[1.0])",4060,"(7,[5],[1.0])",0.033344448403865905,0.625,0.023809523809523808,0.0,0.09409408883837926,0.022727272727272728,0.0,"(4,[0],[1.0])",0.1015625,"(19605,[1702],[8.369902262936689])"'
+# Invoke the endpoint 
+response = sagemaker_runtime.invoke_endpoint(EndpointName=endpoint_name, 
+                                             ContentType='text/csv', 
+                                             Body=payload)
+# Extract predicted label from the response
+body = response['Body'].read()
+prediction = body.decode('utf-8').split(',')[0]
+print(f'Expected class: default | Predicted class: {prediction}')
+
+
+
+# Test case for when an user will pay off the loan
+payload = '0.2753623188405797,0.0,0.4606164089024406,"(8,[1],[1.0])","(36,[3],[1.0])","(4,[2],[1.0])",4060,"(7,[1],[1.0])",0.6668889680773181,0.125,0.19047619047619047,0.0,0.21021020699944623,0.39772727272727276,1.0,"(4,[0],[1.0])",0.1765625,"(19605,[46,68,171],[5.090065738278801,5.44061508879085,6.281571773839607])"'
+# Invoke the endpoint 
+response = sagemaker_runtime.invoke_endpoint(EndpointName=endpoint_name, 
+                                             ContentType='text/csv', 
+                                             Body=payload)
+# Extract predicted label from the response
+body = response['Body'].read()
+prediction = body.decode('utf-8').split(',')[0]
+print(f'Expected class: fully paid | Predicted class: {prediction}')
+'''
 
 1. Early stopping for HPO mode
 You can also stop the Autopilot experiment after a certain number of trials (e.g. 20) instead of the default 250 max trials and still get results. By default, Autopilot tries to explore up to 250 trials with default settings. Suppose Autopilot starts consistently creating trials with an objective metric value greater than 0.90 accuracy (which is your desired goal) after the first 10 to 15 trials. You can click ‘Stop the experiment’ at this point for the purposes of this experiment.
