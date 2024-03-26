@@ -113,9 +113,10 @@ Explainability results are not shown for the secondary (non-winning) models.
 ![SageMaker](/images/image36.png?featherlight=false)
 
 - Suppose you deployed the model as a real-time endpoint, you should be able to see the deployed endpoints under the Deployments section in the left pane as shown in the figure below.
-![SageMaker](/image/image43.png?featherlight=false)
+![SageMaker](/images/image43.png?featherlight=false)
 
 - The code sample below shows how to use a realtime endpoint that was previously deployed and make inference with the Autopilot trained best model.
+
 ```import boto3
 
 # Create a low-level client representing Amazon SageMaker Runtime
