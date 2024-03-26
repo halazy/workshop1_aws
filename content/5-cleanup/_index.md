@@ -19,26 +19,26 @@ To avoid incurring unnecessary charges, use the AWS Management Console to delete
 Open the Amazon SageMaker Console  and delete the following resources:
 1. The endpoint configuration.
 - Under Inference, choose Endpoint configurations. 
-[SageMaker](/images/2-CreateS3Bucket/image20.png?featherlight=false)
+[SageMaker](/images/image20.png?featherlight=false)
 
 - Choose the endpoint configuration that you created in the example, choose Actions, and then choose Delete. 
-[SageMaker](/images/2-CreateS3Bucket/image12.png?featherlight=false)
+[SageMaker](/images/image12.png?featherlight=false)
 
-2. The endpoint. Deleting the endpoint also deletes the ML compute instance or instances that support it.
+1. The endpoint. Deleting the endpoint also deletes the ML compute instance or instances that support it.
 - Under Inference, choose Endpoints. 
-[SageMaker](/images/2-CreateS3Bucket/image15.png?featherlight=false)
+[SageMaker](/images/image15.png?featherlight=false)
 - Choose the endpoint that you created in the example, choose Actions, and then choose Delete.
-[SageMaker](/images/2-CreateS3Bucket/image13.png?featherlight=false)
-3. The model.
+[SageMaker](/images/image13.png?featherlight=false)
+1. The model.
 - Under Inference, choose Models. 
-[SageMaker](/images/2-CreateS3Bucket/image19.png?featherlight=false)
+[SageMaker](/images/image19.png?featherlight=false)
 - Choose the model that you created in the example, choose Actions, and then choose Delete.
-[SageMaker](/images/2-CreateS3Bucket/image24.png?featherlight=false)
-4. Amazon SageMaker Studio
+[SageMaker](/images/image24.png?featherlight=false)
+1. Amazon SageMaker Studio
 - Ensure that your Amazon SageMaker studio has been shutdown by selecting Shutdown from the File menu, followed by Shut Down All 
-[SageMaker](/images/2-CreateS3Bucket/image10.png?featherlight=false)
-5. Choose Control Panel on the left side of the page to open the SageMaker Domain Control Panel.
-6. Repeat the following steps for each user in the User name list.
+[SageMaker](/images/image10.png?featherlight=false)
+1. Choose Control Panel on the left side of the page to open the SageMaker Domain Control Panel.
+2. Repeat the following steps for each user in the User name list.
 - Choose the user.
 - On the User Details page, for each non-failed app in the Apps list, choose Delete app.
 - On the Delete app dialog, choose Yes, delete app, type delete in the confirmation field, and then choose Delete.

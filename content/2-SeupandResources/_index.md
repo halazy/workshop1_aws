@@ -52,37 +52,37 @@ Follow the steps below to onboard to Amazon SageMaker Studio using Quick Start.
  - - SageMaker Studio is available in the following [regions](https://docs.aws.amazon.com/sagemaker/latest/dg/studio.html).
 
 - In the search bar, type _SageMaker_ and click on _Amazon SageMaker_. 
-  ![SageMaker](/images/2-CreateS3Bucket/image3.png?featherlight=false)
+  ![SageMaker](/images/image3.png?featherlight=false)
 
 - Click on _Amazon SageMaker Studio_ (first option on the left pane). 
-![SageMaker](/images/2-CreateS3Bucket/image4.png?featherlight=false)
+![SageMaker](/images/image11.png?featherlight=false)
 
 - Click on _Quick start_.
 - Define _User name_ as _sagemakeruser_ for example.
 
 - Select _Create a new role_ under Execution role.
-![SageMaker](/images/2-CreateS3Bucket/image5.png?featherlight=false)
+![SageMaker](/images/image8.png?featherlight=false)
 
 - Keep the defaults and click _Create Role_.
-![SageMaker](/images/2-CreateS3Bucket/image6.png?featherlight=false)
+![SageMaker](/images/image9.png?featherlight=false)
 
 - You will see that the role is successfully created
 You can see that the option _Enable Amazon SageMaker project templates and JumpStart for this account and Studio users_ is enabled. Keep this default setting.
 
 - Choose the newly created role and click _Submit_.
-![SageMaker](/images/2-CreateS3Bucket/image7.png?featherlight=false)
+![SageMaker](/images/image18.png?featherlight=false)
 
 - The SageMaker Studio environment will stay in _Pending_ state for a few minutes. 
-![SageMaker](/images/2-CreateS3Bucket/image8.png?featherlight=false)
+![SageMaker](/images/image6.png?featherlight=false)
 
 - After a few minutes, the state will transition to _Ready_. 
-![SageMaker](/images/2-CreateS3Bucket/image9.png?featherlight=false)
+![SageMaker](/images/image4.png?featherlight=false)
 
 - Once Amazon SageMaker Studio is ready then click on Open Studio. The page can take 1 or 2 minutes to load when you access SageMaker Studio for the first time.
-![SageMaker](/images/2-CreateS3Bucket/image10.png?featherlight=false)
+![SageMaker](/images/image7.png?featherlight=false)
 
 - You will be redirected to a new web tab that looks like this: 
-![SageMaker](/images/2-CreateS3Bucket/image11.png?featherlight=false)
+![SageMaker](/images/image5.png?featherlight=false)
 
 Congratulations! You have successfully created a SageMaker Studio domain.
 
