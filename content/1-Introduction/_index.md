@@ -10,7 +10,7 @@ pre: " <b> 1. </b> "
 
 Experiment Faster with AWS Machine Learning - Low-Code ML tools for Data Scientists ussing SageMaker Autopilot:
 
-![Architechture](/images/1-Introduce/image2.png?featherlight=false)
+![Architechture](/images/image22.png?featherlight=false)
 
 ## Solution Overview
 The Machine Learning (ML) journey requires continuous experimentation and rapid prototyping to be successful. In order to create highly accurate and performant models, data scientists have to first experiment with feature engineering, model selection and optimization techniques. These processes are traditionally time consuming and expensive. In this workshop, you will learn how the Low-Code ML capabilities found in Amazon SageMaker Autopilot make it easier to experiment faster and bring highly accurate models to production more quickly and efficiently.
