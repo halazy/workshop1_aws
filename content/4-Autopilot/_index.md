@@ -115,6 +115,15 @@ Explainability results are not shown for the secondary (non-winning) models.
 - Suppose you deployed the model as a real-time endpoint, you should be able to see the deployed endpoints under the Deployments section in the left pane as shown in the figure below.
 ![SageMaker](/images/image43.png?featherlight=false)
 
+1. Early stopping for HPO mode
+You can also stop the Autopilot experiment after a certain number of trials (e.g. 20) instead of the default 250 max trials and still get results. By default, Autopilot tries to explore up to 250 trials with default settings. Suppose Autopilot starts consistently creating trials with an objective metric value greater than 0.90 accuracy (which is your desired goal) after the first 10 to 15 trials. You can click ‘Stop the experiment’ at this point for the purposes of this experiment.
+
+1. Handling missing values
+For numeric feature columns, Autopilot doesn't interpret zeros as missing values and treats them as valid zero values. If they represent missing values then Autopilot should produce better results if you encode them as missing values by replacing them with an empty string. Generally, when using Autopilot, you should only impute missing values when you have some domain specific knowledge. It's usually better to leave missing values as missing values e.g., empty strings.
+
+1. Programmatic Access via SageMaker SDK
+All operations (actions) performed in this demo via the SageMaker UI can be achieved using [SageMaker APIs](https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-reference.html) .
+
 - The code sample below shows how to use a realtime endpoint that was previously deployed and make inference with the Autopilot trained best model.
 
 ```import boto3
@@ -156,14 +165,5 @@ response = sagemaker_runtime.invoke_endpoint(EndpointName=endpoint_name,
 # Extract predicted label from the response
 body = response['Body'].read()
 prediction = body.decode('utf-8').split(',')[0]
-print(f'Expected class: fully paid | Predicted class: {prediction}')
-'''
+print(f'Expected class: fully paid | Predicted class: {prediction}')'''
 
-1. Early stopping for HPO mode
-You can also stop the Autopilot experiment after a certain number of trials (e.g. 20) instead of the default 250 max trials and still get results. By default, Autopilot tries to explore up to 250 trials with default settings. Suppose Autopilot starts consistently creating trials with an objective metric value greater than 0.90 accuracy (which is your desired goal) after the first 10 to 15 trials. You can click ‘Stop the experiment’ at this point for the purposes of this experiment.
-
-1. Handling missing values
-For numeric feature columns, Autopilot doesn't interpret zeros as missing values and treats them as valid zero values. If they represent missing values then Autopilot should produce better results if you encode them as missing values by replacing them with an empty string. Generally, when using Autopilot, you should only impute missing values when you have some domain specific knowledge. It's usually better to leave missing values as missing values e.g., empty strings.
-
-1. Programmatic Access via SageMaker SDK
-All operations (actions) performed in this demo via the SageMaker UI can be achieved using [SageMaker APIs](https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-reference.html) .
